@@ -41,7 +41,7 @@
                 <div class="card">
                   <img class="card-img-top" src="include/Main2-pic.jpg" alt="Card image cap">
                   <div class="card-body">
-                  <a href="../search.php">
+                  <a href="search.php">
                     <h5 class="card-title" href="">Our Sport Spaces</h5></a>
                     <p class="card-text">Here you can find all public sport spaces.</p>
                   </div>
