@@ -1,6 +1,7 @@
 <?php
 class Space {
-    private $host  = 'mtacloud.co.il';
+    //private $host  = 'mtacloud.co.il';
+    private $host  = 'localhost';
     private $user  = 'nimrodba_admin';
     private $password   = 'RIcr13!W?A';
     private $database  = 'nimrodba_urbanspace';
@@ -45,7 +46,7 @@ class Space {
                             <h6 class="card-subtitle mb-2 text-muted">'.$row['address'].', '.$row['city'].'</h6>
                             <h6 class="card-subtitle mb-2 text-muted"><strong>Type:</strong> '.$row['sport_type'].'</strong></h6>
                             <h6 class="card-subtitle mb-2 text-muted"><strong>Num of players: '.$row['num_of_players'].'</strong></h6>
-                            <a href="order_details.php?spaceID='.$row['id'].'" class="card-link">Order</a>
+                            <a href="order.php?spaceID='.$row['id'].'" class="card-link">Order</a>
                             <a href="space-details.php?spaceID='.$row['id'].'" class="card-link">Details</a>
                             </div>
                         </div>

@@ -19,6 +19,7 @@
                 <div class="col-12 text-center">
                   <h1 class="font-weight-light" id="header-title">Urban Space</h1>
                   <p class="lead" id="header-title-desc">Ultimate Sports Experience For All.</p>
+                  <a class="btn btn-success btn-lg" href="search.php" role="button">Book Now</a>
                 </div>
               </div>
             </div>
