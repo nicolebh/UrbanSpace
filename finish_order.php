@@ -22,7 +22,8 @@
     <div class="container">
         <div class="row text-center">
             <div class="col">
-                <h1 class="display-4 p-5">Report an issue</h1>
+                <h1 class="display-4 p-5">We hope you will enjoy :)</h1>
+                <h3 class="pb-5">Your booking has <span class="text-success">confirmed</span></h3>
             </div>
         </div>
         <div class="row">
@@ -30,19 +31,10 @@
                 <img src="include/Gammy_space.jpg" class="img-fluid" alt="Responsive image">
             </div>
             <div class="col-sm">
-                <h3 class="pb-2">Space name</h3>
-                <h6><?php $mydate=getdate(date("U")); echo "$mydate[weekday], $mydate[month] $mydate[mday], $mydate[year]"; ?></h6>
-                <form>
-                    <div class="form-group">
-                    <label for="issue_desc">Issue Description</label>
-                        <textarea class="form-control" id="issue_desc" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="issue_image">Image</label>
-                        <input type="file" class="form-control" id="issue_image">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Report</button>
-                </form>
+                <h3 class="pb-2">The space "space name" is booked</h3>
+                <h4>From: "date begin"<h4>
+                <h4>To: "date end"<h4>
+                <a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://www.example.com&p[images][0]=&p[title]=Title%20Goes%20Here&p[summary]=Description%20goes%20here!" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false"><button style="width:100%; margin-top:10px;" type="button" class="btn btn-facebook btn-lg"><i class="fa fa-facebook fa-2"></i> Share on Facebook</button></a>
             </div>
         </div>
     </div>
