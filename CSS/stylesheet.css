@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .space-navbar {
@@ -66,7 +67,7 @@ html {
 }
 
 .dropdown-menu{
-  overflow: scroll; 
+  overflow: hidden; 
   height: auto;
 }
 
