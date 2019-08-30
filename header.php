@@ -1,20 +1,16 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-light space-navbar" style="background-color:white;">
-            <a class="navbar-brand" href="#">
-                <img src="http://nimrodba.mtacloud.co.il/include/logo.png" width="110px" height="70px">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="http://nimrodba.mtacloud.co.il">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="search.php">Book a space</a>
-                    <a class="nav-item nav-link" href="#feature-section">Features</a>
-                    <a class="nav-item nav-link btn btn-outline-info" href="components/Panel/login.html">Login</a>
-                </div>
-            </div>
-</nav> -->
-<nav class="navbar navbar-expand-lg navbar-light">
+<?php
+session_start();
+if(isset($_SESSION["fullname"])){
+  $fullname = $_SESSION["fullname"];
+  $mgmt_btn = '<button type="button" id="user-menu" class="btn btn-info btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, '. $fullname.'</button>';
+  $login_btn = "";
+}
+else {
+  $mgmt_btn = "";
+  $login_btn = '<a class="nav-item nav-link btn btn-outline-info" style="float:left;" id="login-btn" href="components/Panel/login.html">Login / Sign up</a>';
+}
+?>
+<nav class="navbar navbar-expand-lg navbar-light" id="header_menu">
   <a class="navbar-brand" href="#"><img src="http://nimrodba.mtacloud.co.il/include/logo.png" width="110px" height="70px"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -34,16 +30,17 @@
         <u><a class="nav-item nav-link" href="search.php">Book a space</a></u>
       </li>
     </ul>
-    <span class="navbar-text">
-        <a class="nav-item nav-link btn btn-outline-info" href="components/Panel/login.html">Login / Sign up</a>
+    <span class="navbar-text" style="display: inline;">
+        <?php echo $login_btn; ?>
         <div class="btn-group">
-          <button type="button" class="btn btn-info btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Administration
-          </button>
+        <?php echo $mgmt_btn; ?>
           <div class="dropdown-menu dropdown-menu-right">
+          <?php if(isset($_SESSION["role"]) && $_SESSION["role"] == "supplier") { ?>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Add-Space-Modal">Add Space</a>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Remove-Space-Modal">Remove/Shut Space</a>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Reported-issues-Modal">Reported issues</a>
+          <?php } ?>
+          <a class="dropdown-item" href="#" id="logout">Log off</a>
           </div>
         </div>
     </span>
@@ -52,7 +49,7 @@
 
 <!-- Add Space Modal -->
 <div class="modal fade" id="Add-Space-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add new space</h5>
@@ -61,40 +58,41 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="index.php" method="post" enctype="multipart/form-data">
+        <form action="/urbanspace/php_classes/spaces_mgmt.php" id="addNewSpace-form" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="space_name">Name</label>
-            <input type="text" class="form-control" id="space_name" placeholder="Enter a title for the space">
+            <input type="text" class="form-control" name="space_name" id="space_name" placeholder="Enter a title for the space">
           </div>
           <div class="form-group">
             <label for="space_address">Address</label>
-            <input type="text" class="form-control" id="space_address" placeholder="Example: Negba St 7">
+            <input type="text" class="form-control" name="space_address" id="space_address" placeholder="Example: Negba St 7">
           </div>
           <div class="form-group">
             <label for="space_city">City</label>
-            <input type="text" class="form-control" id="space_city" placeholder="Example: Tel-Aviv">
+            <input type="text" class="form-control" name="space_city" id="space_city" placeholder="Example: Tel-Aviv">
           </div>
           <div class="form-group">
             <label for="space_sport_type">Type of sport</label>
-            <input type="text" class="form-control" id="space_sport_type" placeholder="Example: Football">
+            <input type="text" class="form-control" name="space_sport_type" id="space_sport_type" placeholder="Example: Football">
           </div>
           <div class="form-group">
             <label for="space_num_players">Amount of players</label>
-            <input type="number" class="form-control" id="space_num_players" placeholder="Example: Football">
+            <input type="number" class="form-control" name="space_num_players" id="space_num_players" placeholder="Example: 5 players">
           </div>
           <div class="form-group">
             <label for="space_features">Features (select many)</label>
-            <select multiple class="form-control" id="space_features">
+            <select multiple class="form-control" name="space_features" id="space_features">
               <option>1</option>
               <option>2</option>
               <option>3</option>
               <option>4</option>
               <option>5</option>
             </select>
+            <input type="text" name="features_sum" value="0" id="features_sum" style="visibility: hidden"></span>
           </div>
           <div class="form-group">
             <label for="space_image">Image</label>
-            <input type="file" class="form-control" id="space_image">
+            <input type="file" class="form-control" id="space_image" name="space_image">
           </div>
       </div>
       <div class="modal-footer">
@@ -193,3 +191,31 @@
     </div>
   </div>
 </div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyCjXXJ6cjN7EjvPIfiaUj6EC1KzpYQA-_I",
+    authDomain: "urbanspace-c98eb.firebaseapp.com",
+    databaseURL: "https://urbanspace-c98eb.firebaseio.com",
+    projectId: "urbanspace-c98eb",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// update firestore setting
+db.settings({timestampsInSnapshots: true})
+</script>
+    <script src="components/Firebase/auth.js"></script>
+    <!-- <script src="/urbanspace/js/spaces_mgmt.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" crossorigin="anonymous"></script>

@@ -39,13 +39,13 @@ class Space {
                     $address = $row['address'] . ', ' . $row['city'];
                     $status = $row['status'];
                     if($status == "open"){
-                        $status = '<small class="float-right text-success font-weight-bold">Open</small>';
+                        $status = '<small class="float-right text-success font-weight-bold">Available to use</small>';
                         $order = '<a href="order.php?spaceID='.$row['id'].'" class="card-link font-weight-bold">Book</a>';
                         $details = '<a href="space-details.php?spaceID='.$row['id'].'" class="card-link">Details</a>';
                         $report_an_issue = '<a href="report_an_issue.php?spaceID='.$row['id'].'" class="card-link">Report an issue</a>';
                     }
                     else {
-                        $status = '<small class="text-danger font-weight-bold">Close</small>';
+                        $status = '<small class="text-danger font-weight-bold">Closed for the moment</small>';
                         $order = '';
                         $details = '';
                         $report_an_issue = '';

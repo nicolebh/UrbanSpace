@@ -55,5 +55,12 @@
         $('#datepicker_start').datetimepicker({ footer: true, modal: true });
         $('#datepicker_end').datetimepicker({ footer: true, modal: true });
     </script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+    <script src="components/Firebase/auth.js"></script>
+    <script>
+        CheckIfLoggedIn();
+    </script>
 </body>
 </html>
