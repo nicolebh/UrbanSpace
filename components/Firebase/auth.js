@@ -33,7 +33,7 @@ if(document.querySelector('#signup-form')){
                 type: "POST",
                 url: "../../php_classes/register.php",		
                 data: {
-                    action: 'fetch_data',
+                    action: 'register',
                     username: username,
                     email: email,
                     password: password,

@@ -117,19 +117,18 @@ if ($_POST["action"] == "get_spaces") {
                     <a class="btn btn-danger btn-sm" href="#" onclick="handle_remove_space_btn('.$row["id"].')" id="remove_space_btn" role="button">Remove Space</a>
                     ';
         if($row['status'] == 'open') {
-            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:inline;" onclick="handle_shut_space_btn('.$row["id"].')" class="shut_space_btn" role="button">Shut Space</a>
-                    <a class="btn btn-success btn-sm" href="#" style="display:none;" onclick="handle_open_space_btn('.$row["id"].')" class="open_space_btn" role="button">Open Space</a>  
+            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:inline;" onclick="handle_shut_space_btn('.$row["id"].')" id="shut_space_btn_'.$row["id"].'" role="button">Shut Space</a>
+                    <a class="btn btn-success btn-sm" href="#" style="display:none;" onclick="handle_open_space_btn('.$row["id"].')" id="open_space_btn_'.$row["id"].'" role="button">Open Space</a>  
                     </div>
             ';
         }
         else {
-            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:none;" onclick="handle_shut_space_btn('.$row["id"].')" class="shut_space_btn" role="button">Shut Space</a>
-                    <a class="btn btn-success btn-sm" href="#" style="display:inline;" onclick="handle_open_space_btn('.$row["id"].')" class="open_space_btn" role="button">Open Space</a>
+            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:none;" onclick="handle_shut_space_btn('.$row["id"].')" id="shut_space_btn_'.$row["id"].'" role="button">Shut Space</a>
+                    <a class="btn btn-success btn-sm" href="#" style="display:inline;" onclick="handle_open_space_btn('.$row["id"].')" id="open_space_btn_'.$row["id"].'" role="button">Open Space</a>
                     </div>
             ';
         }
         $html .='
-                <span id="issue_status_lbl"></span>
                 </li>
                 <hr>
         ';
@@ -166,26 +165,14 @@ if ($_POST["action"] == "open_space") {
     }
 }
 
-// Retrieve all open issues
-if ($_POST["action"] == "get_issues") {
-    $
-    $query = "UPDATE spaces SET status='open' WHERE id=$id";
-    
-    if(!mysqli_query($db, $query)){
-        echo "Error while trying to remove space";
-    }
-}
-
-
 
 // Get a list of issues for spaces owned by the user
 if ($_POST["action"] == "get_reports") {
     $html = '';
-    $query = "SELECT * FROM reports WHERE space_owner='$user_owner'";
+    $query = "SELECT * FROM reports WHERE space_owner='$user_owner' AND status='open'";
     $result = mysqli_query($db, $query);
-
     while($row = $result->fetch_assoc()) {
-        $query2 = "SELECT status, name FROM spaces WHERE id=".$row['space_id'];
+        $query2 = "SELECT status, name FROM spaces WHERE id=".$row['space_id']." LIMIT 1";
         $result2 = mysqli_query($db, $query2);
         $row2 = $result2->fetch_assoc();
 
@@ -204,22 +191,47 @@ if ($_POST["action"] == "get_reports") {
                 ';
                 
         if($row2['status'] == 'open') {
-            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:inline;" onclick="handle_shut_space_btn('.$row["space_id"].')" class="shut_space_btn" role="button">Shut Space</a>
-                    <a class="btn btn-info btn-sm" href="#" style="display:none;" onclick="handle_open_space_btn('.$row["space_id"].')" class="open_space_btn" role="button">Open Space</a>  
+            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:inline;" onclick="handle_shut_space_btn('.$row["space_id"].')" id="shut_space_btn_'.$row["id"].'" role="button">Shut Space</a>
+                    <a class="btn btn-info btn-sm" href="#" style="display:none;" onclick="handle_open_space_btn('.$row["space_id"].')" id="open_space_btn_'.$row["id"].'" role="button">Open Space</a>  
                     </div>
-                </li>
-                <hr>
             ';
         }
         else {
-            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:none;" onclick="handle_shut_space_btn('.$row["space_id"].')" class="shut_space_btn" role="button">Shut Space</a>
-                    <a class="btn btn-info btn-sm" href="#" style="display:inline;" onclick="handle_open_space_btn('.$row["space_id"].')" class="open_space_btn" role="button">Open Space</a>
+            $html .= '<a class="btn btn-warning btn-sm" href="#" style="display:none;" onclick="handle_shut_space_btn('.$row["space_id"].')" id="shut_space_btn_'.$row["id"].'" role="button">Shut Space</a>
+                    <a class="btn btn-info btn-sm" href="#" style="display:inline;" onclick="handle_open_space_btn('.$row["space_id"].')" id="open_space_btn_'.$row["id"].'" role="button">Open Space</a>
                     </div>
-                </li>
-                <hr>
             ';
         }
+        $html .='
+                <span id="issue_status_lbl"></span>
+                </li>
+                <hr>
+        ';
+    }
     echo $html;
+}
+
+// Resolve an issues
+if ($_POST["action"] == "resolve_issue") {
+    $id = mysqli_real_escape_string($db, $_POST["spaceId"]);
+    $query = "UPDATE reports SET status='closed' WHERE id=$id";
+
+    if(!mysqli_query($db, $query)){
+        echo "Error while trying to remove space";
+    }
+    else {
+        $query = "SELECT users.email FROM reports INNER JOIN users on users.username = reports.issue_user WHERE id=$id";
+        $result = mysqli_query($db, $query);
+        $row = $result->fetch_assoc();
+
+        $from = "nicole.marcus1@gmail.com";
+        $to = "yaniv.bhemo@gmail.com";
+        // $to = $row['email'];
+        $subject = "Urbanspace - Your issue has been resolved :)";
+        $message = "Greetings from Urabnspace";
+        $headers = "From:" . $from;
+        mail($to,$subject,$message, $headers);
+        echo "The email message was sent.";
     }
 }
 

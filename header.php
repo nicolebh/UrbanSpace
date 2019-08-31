@@ -6,7 +6,7 @@ if(isset($_SESSION["fullname"])){
   $login_btn = "";
 }
 else {
-  $mgmt_btn = "";
+  $mgmt_btn = '';
   $login_btn = '<a class="nav-item nav-link btn btn-outline-info" style="float:left;" id="login-btn" href="components/Panel/login.html">Login / Sign up</a>';
 }
 ?>
@@ -135,7 +135,6 @@ else {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

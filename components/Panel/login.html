@@ -71,7 +71,7 @@
                                 <div class="social-login-content">
                                     <div class="social-button">
                                         <button class="au-btn au-btn--block au-btn--blue m-b-20">sign in with facebook</button>
-                                        <button class="au-btn au-btn--block au-btn--blue2">sign in with Google</button>
+                                        <button class="au-btn au-btn--block au-btn--blue2" id="google_signin_btn">sign in with Google</button>
                                     </div>
                                 </div>
                             </form>
@@ -112,9 +112,10 @@
     // update firestore setting
     db.settings({timestampsInSnapshots: true})
     </script>
-    <script src="../Firebase/auth.js"></script>
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
+    <script src="../Firebase/auth.js"></script>
+    <script src="../Firebase/googleauth.js"></script>
     <!-- Bootstrap JS-->
     <script src="vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>

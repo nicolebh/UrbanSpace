@@ -123,9 +123,9 @@ function handle_shut_space_btn(spaceId){
             spaceId: spaceId
         },
         success: function(data){
-            document.getElementsById('shut_space_btn').style.display="none";
-            document.getElementsById('open_space_btn').style.display="inline";
-            document.getElementsById('issue_status_lbl').innerHTML="Space Current Shut";
+            document.getElementById('shut_space_btn_'+spaceId).style.display="none";
+            document.getElementById('open_space_btn_'+spaceId).style.display="inline";
+            document.getElementById('issue_status_lbl').innerHTML="Space Current Shut";
             document.getElementById('status_lbl').innerHTML=" Close";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -145,9 +145,9 @@ function handle_open_space_btn(spaceId){
         },
         success: function(data){
             console.log(data);
-            document.getElementsById('shut_space_btn').style.display="inline";
-            document.getElementsById('open_space_btn').style.display="none";
-            document.getElementsById('issue_status_lbl').innerHTML="Space Current Open";
+            document.getElementById('shut_space_btn_'+spaceId).style.display="inline";
+            document.getElementById('open_space_btn_'+spaceId).style.display="none";
+            document.getElementById('issue_status_lbl').innerHTML="Space Current Open";
             document.getElementById('status_lbl').innerHTML=" Open";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -158,20 +158,16 @@ function handle_open_space_btn(spaceId){
 }
 
 function handle_resolve_issue_btn(spaceId){
-    console.log("test");
-    const open_space_btn = document.querySelector('#open_space_btn');
     $.ajax({
         type: "POST",
         url: "/urbanspace/php_classes/spaces_mgmt.php",		
         data: {
-            action: 'open_space',
+            action: 'resolve_issue',
             spaceId: spaceId
         },
         success: function(data){
             console.log(data);
-            document.getElementById('shut_space_btn').style.display="inline";
-            document.getElementById('open_space_btn').style.display="none";
-            document.getElementById('status_lbl').innerHTML=" Open";
+            document.getElementById('issueBox-'+spaceId).style.display="none";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("error in ajax request");
