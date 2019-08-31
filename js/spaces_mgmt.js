@@ -1,66 +1,65 @@
-//Add new space
-if(document.querySelector('#addNewSpace-form')){
-    const addspaceform = document.querySelector('#addNewSpace-form');
-    addspaceform.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // const name = addspaceform['space_name'].value;
-        // const address = addspaceform['space_address'].value;
-        // const city = addspaceform['space_city'].value;
-        // const sport_type = addspaceform['space_sport_type'].value;
-        // const num_of_players = addspaceform['space_num_players'].value;
-        // const features = document.querySelector('#features_sum').innerHTML;
-        // const space_image = $('#space_image').prop('files')[0];
-        var fd = new FormData(document.querySelector('#addNewSpace-form'));
-        // fd.append('space_image', space_image);
-        // fd.append('name', name);
-        // fd.append('address', address);
-        // fd.append('city', city);
-        // fd.append('sport_type', sport_type);
-        // fd.append('num_of_players', num_of_players);
-        // fd.append('features', features);
+$( document ).ready(function() {
+    //get a list of all the features available for the 'add space form'
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'get_features',
+        },
+        success: function(data){
+            document.getElementById('space_features_box').innerHTML = data;
+            trigger_feature_summary();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
 
-        console.log(fd);
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/urbanspace/php_classes/spaces_mgmt.php",	
-        //     contentType: false,
-        //     processData: false,	
-        //     data: {
-        //         action: "add_new_space",
-        //         name: name,
-        //         address: address,
-        //         city: city,
-        //         sport_type: sport_type,
-        //         num_of_players: num_of_players,
-        //         features: features,
-        //         space_image: fd
-        //     },
-        //     success: function(data){
-        //         if(data) {
-        //             console.log(data); 
-        //             alert(data);  
-        //         }
-        //     },
-        //     error: function(XMLHttpRequest, textStatus, errorThrown) {
-        //         console.log("error in ajax request");
-        //         console.log(errorThrown);
-        //     }
-        // })    
-    })
-}
+    //Get a list of spaces for 'shut/remove' menu
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'get_spaces',
+        },
+        success: function(data){
+            document.getElementById('space_list').innerHTML = data;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
 
+    //Get a list of issues
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'get_reports',
+        },
+        success: function(data){
+            document.getElementById('issue_list').innerHTML = data;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
+});
+function trigger_feature_summary() {
 document.getElementById('space_features').onchange = function(e) {
-    
     // get reference to display textarea
     var features_sum = document.getElementById('features_sum');
-    features_sum.innerHTML = ''; // reset
+    features_sum.value = ''; // reset
     
     // callback fn handles selected options
     getSelectedOptions(this, callback);
     
     // remove ', ' at end of string
-    var str = features_sum.innerHTML.slice(0, -2);
-    features_sum.innerHTML = str;
+    var str = features_sum.value.slice(0, -2);
+    features_sum.value = str;
 };
 
 function getSelectedOptions(sel, fn) {
@@ -88,10 +87,95 @@ function getSelectedOptions(sel, fn) {
 function callback(opt) {
     // display in textarea for this example
     var features_sum = document.getElementById('features_sum');
-    features_sum.innerHTML += opt.value + ', ';
+    features_sum.value += opt.value + ', ';
 
     // can access properties of opt, such as...
     //alert( opt.value )
     //alert( opt.text )
     //alert( opt.form )
+}
+}
+
+function handle_remove_space_btn(spaceId){
+    const remove_space_btn = document.querySelector('#remove_space_btn');
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'remove_space',
+            spaceId: spaceId
+        },
+        success: function(data){
+            document.getElementById('spaceBox-'+spaceId).style.display="none";
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
+}
+function handle_shut_space_btn(spaceId){
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'shut_space',
+            spaceId: spaceId
+        },
+        success: function(data){
+            document.getElementsById('shut_space_btn').style.display="none";
+            document.getElementsById('open_space_btn').style.display="inline";
+            document.getElementsById('issue_status_lbl').innerHTML="Space Current Shut";
+            document.getElementById('status_lbl').innerHTML=" Close";
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
+}
+function handle_open_space_btn(spaceId){
+    const open_space_btn = document.querySelector('#open_space_btn');
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'open_space',
+            spaceId: spaceId
+        },
+        success: function(data){
+            console.log(data);
+            document.getElementsById('shut_space_btn').style.display="inline";
+            document.getElementsById('open_space_btn').style.display="none";
+            document.getElementsById('issue_status_lbl').innerHTML="Space Current Open";
+            document.getElementById('status_lbl').innerHTML=" Open";
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
+}
+
+function handle_resolve_issue_btn(spaceId){
+    console.log("test");
+    const open_space_btn = document.querySelector('#open_space_btn');
+    $.ajax({
+        type: "POST",
+        url: "/urbanspace/php_classes/spaces_mgmt.php",		
+        data: {
+            action: 'open_space',
+            spaceId: spaceId
+        },
+        success: function(data){
+            console.log(data);
+            document.getElementById('shut_space_btn').style.display="inline";
+            document.getElementById('open_space_btn').style.display="none";
+            document.getElementById('status_lbl').innerHTML=" Open";
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("error in ajax request");
+            console.log(errorThrown);
+         }
+    });
 }

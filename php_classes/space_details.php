@@ -57,6 +57,7 @@ class spaceDetails {
                         <h5>'.$row['address'].', '.$row['city'].'</h5>
                         <h5><strong>Type:</strong> '.$row['sport_type'].'</h5>
                         <h5><strong>Num of players:</strong> '.$row['num_of_players'].'</h5>
+                        <h5><strong>Features:</strong> '.$row['features'].'</h5>
                         <iframe frameborder="0" src="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' . str_replace(",", "", str_replace(" ", "+", $address)) . '&z=14&output=embed"></iframe>
                         <a href="order.php" class="btn btn-success btn-block">Order</a>
                     </div>

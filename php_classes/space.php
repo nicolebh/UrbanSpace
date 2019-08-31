@@ -108,7 +108,6 @@ class Space {
 
     public function getNewSpaces()
     {
-        $filterField = trim($filterField,' ');
         $sql_query = "SELECT * from spaces order by id desc limit 3";
         $result = $this->dbConnect->query($sql_query);
         $generateHTML = '<div class="container">';

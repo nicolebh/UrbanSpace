@@ -62,7 +62,7 @@ function fillFilterOptions(){
 			$('#participantsDropDown').html(data.html);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("errorrr1");
+			alert(errorThrown);
 		 }
 	});
 }
@@ -81,7 +81,7 @@ function displayAllSpaces(){
 			$('#search-results').html(data.html);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("errorrr");
+			alert(errorThrown);
 		 }
 	});
 }
@@ -100,7 +100,7 @@ function displayNewSpaces(){
             $('#search-results').html(data.html);
 		},
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             alert("errorrr");
+             alert(errorThrown);
         }
     });
 }

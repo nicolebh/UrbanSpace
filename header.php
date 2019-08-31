@@ -79,16 +79,8 @@ else {
             <label for="space_num_players">Amount of players</label>
             <input type="number" class="form-control" name="space_num_players" id="space_num_players" placeholder="Example: 5 players">
           </div>
-          <div class="form-group">
-            <label for="space_features">Features (select many)</label>
-            <select multiple class="form-control" name="space_features" id="space_features">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            <input type="text" name="features_sum" value="0" id="features_sum" style="visibility: hidden"></span>
+          <div class="form-group" id="space_features_box">
+            <!-- Generated from spaces_mgmt.php -->
           </div>
           <div class="form-group">
             <label for="space_image">Image</label>
@@ -115,33 +107,12 @@ else {
         </button>
       </div>
       <div class="modal-body">
-        <ul class="list-unstyled">
-          <li class="media">
-            <img src="..." class="mr-3" alt="...">
-            <div class="media-body">
-              <h5 class="mt-0 mb-1">List-based media object</h5>
-              Street
-              <br>
-              <a class="btn btn-danger btn-sm" href="#" role="button">Remove Space</a>
-              <a class="btn btn-warning btn-sm" href="#" role="button">Shut Space</a>
-            </div>
-          </li>
-          <hr>
-          <li class="media">
-            <img src="..." class="mr-3" alt="...">
-            <div class="media-body">
-              <h5 class="mt-0 mb-1">List-based media object</h5>
-              street
-              <br>
-              <a class="btn btn-danger btn-sm" href="#" role="button">Remove Space</a>
-              <a class="btn btn-warning btn-sm" href="#" role="button">Shut Space</a>
-            </div>
-          </li>
+        <ul class="list-unstyled" id="space_list">
+
         </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -158,30 +129,8 @@ else {
         </button>
       </div>
       <div class="modal-body">
-        <ul class="list-unstyled">
-          <li class="media">
-            <img src="..." class="mr-3" alt="...">
-            <div class="media-body">
-              <h5 class="mt-0 mb-1">Issue Num: #1</h5>
-              <h5 class="mt-0 mb-1">Date:</h5>
-              <p>Issue Description</p>
-              <br>
-              <a class="btn btn-success btn-sm" href="#" role="button">Resolve Issue</a>
-              <a class="btn btn-warning btn-sm" href="#" role="button">Shut Space</a>
-            </div>
-          </li>
-          <hr>
-          <li class="media">
-            <img src="..." class="mr-3" alt="...">
-            <div class="media-body">
-              <h5 class="mt-0 mb-1">Issue Num: #1</h5>
-              <h5 class="mt-0 mb-1">Date:</h5>
-              <p>Issue Description</p>
-              <br>
-              <a class="btn btn-success btn-sm" href="#" role="button">Resolve Issue</a>
-              <a class="btn btn-warning btn-sm" href="#" role="button">Shut Space</a>
-            </div>
-          </li>
+        <ul class="list-unstyled" id="issue_list">
+          <!-- Content generated from spaces_mgmt.php -->
         </ul>
       </div>
       <div class="modal-footer">
@@ -216,6 +165,6 @@ const db = firebase.firestore();
 // update firestore setting
 db.settings({timestampsInSnapshots: true})
 </script>
-    <script src="components/Firebase/auth.js"></script>
-    <!-- <script src="/urbanspace/js/spaces_mgmt.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.js" crossorigin="anonymous"></script>
+    <script src="components/Firebase/auth.js"></script>
+    <script src="/urbanspace/js/spaces_mgmt.js"></script>

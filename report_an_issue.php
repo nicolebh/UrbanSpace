@@ -1,3 +1,97 @@
+<?php
+error_reporting(E_WARNING);
+require_once('php_classes/config.php');
+session_start();
+
+$name = $image = $date_of_create = '';
+
+if(isset($_GET['spaceID']))
+{
+    $spaceId = $_GET['spaceID'];
+    $query = "SELECT * from spaces WHERE id=$spaceId LIMIT 1";
+    $result = mysqli_query($db, $query);
+    $row = $result->fetch_assoc();
+    $name = $row['name'];
+    $date_of_create = date("Y-m-d");
+    $image = $row['image'];
+}
+
+if(isset($_POST['issue_desc']))
+{
+    $errors = array(); 
+    $issue_desc = mysqli_real_escape_string($db, $_POST["issue_desc"]);
+    $date_of_create = date("Y-m-d");
+    $spaceId = mysqli_real_escape_string($db, $_POST["spaceId"]);
+
+    //Get User owner
+    $query = "SELECT user_owner FROM spaces WHERE id=".$spaceId;
+    $result = mysqli_query($db, $query);
+    $row = $result->fetch_assoc();
+    $space_owner = $row['user_owner'];
+
+    //The user that create the issue
+    $issue_user = $_SESSION["username"];
+
+    if (empty($issue_desc) || empty($_FILES["issue_image"])) { array_push($errors, "All fields required"); }
+
+    $image_target_dir = "include/issues/";
+    $uploadOk = 1;
+    $imageFileType = ltrim($_FILES["issue_image"]["type"], "image/");
+    $image_target_file = $image_target_dir . "report-" . $spaceId ."-" . date("Y-m-d") . "." . $imageFileType;
+    
+    // Check if file already exists
+    if (file_exists($image_target_file)) {
+        array_push($errors, "Sorry, file already exists.");
+        $uploadOk = 0;
+    }
+    
+    // Check file size
+    if ($_FILES["issue_image"]["size"] > 5000000) {
+        array_push($errors, "Sorry, your file is too large.");
+        $uploadOk = 0;
+    }
+    
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+        array_push($errors, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+        $uploadOk = 0;
+    }
+    
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        array_push($errors, "Sorry, your file was not uploaded.");
+    // if everything is ok, try to upload file
+    } else {
+        
+        if (move_uploaded_file($_FILES["issue_image"]["tmp_name"], $image_target_file)) {
+            $query = "INSERT INTO reports (space_id, description, image, date_of_create, space_owner, issue_user) VALUES ($spaceId,'$issue_desc','$image_target_file','$date_of_create','$space_owner','$issue_user')";
+            if(!mysqli_query($db, $query)){
+                array_push($errors, "Error while trying to run the following on the DB: <br>" . $query);
+                $html = '<div class="alert alert-danger" role="alert"><ul>';
+                foreach ($errors as $value)
+                    $html .= '
+                    <li>'.$value.'</li>
+                    ';
+                $html .= '</ul></div>';
+                echo $html;
+            } else {
+                header("Location: search.php");
+            }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+    $html = '<div class="alert alert-danger" role="alert"><ul>';
+            foreach ($errors as $value)
+            $html .= '
+            <li>'.$value.'</li>
+            ';
+            $html .= '</ul></div>';
+            echo $html;
+    header("Location: search.php");
+}
+?>
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -27,21 +121,22 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <img src="include/Gammy_space.jpg" class="img-fluid" alt="Responsive image">
+                <img src="<?php echo $image;?>" class="img-fluid" alt="Responsive image">
             </div>
             <div class="col-sm">
-                <h3 class="pb-2">Space name</h3>
+                <h3 class="pb-2"><?php echo $name;?></h3>
                 <h6><?php $mydate=getdate(date("U")); echo "$mydate[weekday], $mydate[month] $mydate[mday], $mydate[year]"; ?></h6>
-                <form>
+                <form action="report_an_issue.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                     <label for="issue_desc">Issue Description</label>
-                        <textarea class="form-control" id="issue_desc" rows="3"></textarea>
+                        <textarea class="form-control" id="issue_desc" name="issue_desc" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="issue_image">Image</label>
-                        <input type="file" class="form-control" id="issue_image">
+                        <input type="file" class="form-control" id="issue_image" name="issue_image">
                     </div>
                     <button type="submit" class="btn btn-primary">Report</button>
+                    <input type="text" style="visibility: hidden;" value="<?php echo $spaceId; ?>" name="spaceId" id="spaceId">
                 </form>
             </div>
         </div>
