@@ -38,7 +38,7 @@ if($_POST["action"] == "check_booked_dates")
                 $hour_index=2;
                 for($i=0;$i<$row["duration"];$i++){
                     $available_hours[$hour_index] = "1";
-                    $hour_index++;
+                    $hour_index++
                 }
                 break;
             case "20":
