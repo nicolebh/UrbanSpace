@@ -47,6 +47,7 @@ class spaceDetails {
                  <div class="row text-center">
                     <div class="col">
                         <h1 class="display-4 p-5">'.$row['name'].'</h1>
+                        <hr>
                     </div>
                 </div>
                 <div class="row">
