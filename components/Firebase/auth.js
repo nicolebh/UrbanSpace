@@ -134,11 +134,31 @@ function CheckIfLoggedIn() {
                 window.location.href = "components/Panel/login.html";
             }
             else {
-                page.style.visibility = "visible";
-                header.style.visibility = "visible";
+                $.ajax({
+                        type: "POST",
+                        url: "/urbanspace/components/Firebase/auth.php",		
+                        data: {
+                            action: "login",
+                            fullname: user.displayName
+                        },
+                        success: function(data){
+                            if(data == "False") {
+                                auth.signOut().then(() => {
+                                    console.log("logged out");
+                                });
+                            }
+                            else {
+                                page.style.visibility = "visible";
+                                header.style.visibility = "visible";
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("error in ajax request");
+                            console.log(errorThrown);
+                        }
+                    })
             }
-        })
         return false;
-    };
+    });
     return;
-}
+}}

@@ -1,13 +1,15 @@
 $(document).ready(function() {
     firebase.auth().getRedirectResult().then(function(result) {
         if (result.credential) {
+            document.querySelector('#sign_in_btn').innerHTML= 'Loading';
+            document.querySelector('#login-email').disabled = true;
+            document.querySelector('#login-password').disabled = true;
           // This gives you a Google Access Token. You can use it to access the Google API.
           var token = result.credential.accessToken;
           // ...
         }
         // The signed-in user info.
         var user = result.user;
-        console.log(user);
         
         // const email = user.email;
         
@@ -21,7 +23,6 @@ $(document).ready(function() {
         // const city = signupForm['city'].value;
         // const street = signupForm['street'].value;
         // const terms = signupForm['terms'].checked;
-        
             $.ajax({
                 type: "POST",
                 url: "../../php_classes/register.php",		
