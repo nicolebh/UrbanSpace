@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Space {
     //private $host  = 'mtacloud.co.il';
     private $host  = 'localhost';
@@ -40,7 +41,7 @@ class Space {
                     $status = $row['status'];
                     if($status == "open"){
                         $status = '<small class="float-right text-success font-weight-bold">Available to use</small>';
-                        $order = '<a href="order.php?spaceID='.$row['id'].'" class="card-link font-weight-bold">Book</a>';
+                        $order = '<a href="order.php?username='.$_SESSION['username'].'&spaceID='.$row['id'].'" class="card-link font-weight-bold">Book</a>';
                         $details = '<a href="space-details.php?spaceID='.$row['id'].'" class="card-link">Details</a>';
                         $report_an_issue = '<a href="report_an_issue.php?spaceID='.$row['id'].'" class="card-link">Report an issue</a>';
                     }

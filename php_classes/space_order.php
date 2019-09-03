@@ -11,7 +11,6 @@ if($_POST["action"] == "check_booked_dates")
     $spaceID = mysqli_real_escape_string($db, $_POST["spaceID"]);
     $book_date = mysqli_real_escape_string($db, $_POST["book_date"]);
     $duration = mysqli_real_escape_string($db, $_POST["duration"]);
-    
     //available_hours array = 
     //[0] = 17:00, [1] = 18:00, [2] = 19:00, [3] = 20:00, [4] = 21:00, [5] = 22:00
     $available_hours = array("0","0","0","0","0","0");
@@ -68,7 +67,7 @@ if($_POST["action"] == "check_booked_dates")
             if($duration == 1){
                 if($available_hours[$i] == "0"){
                     $html .= '
-                        <button type="button" startTime='.hourTranslate($i).' duration='.$duration.' class="btn btn-primary mt-1">'.hourTranslate($i).':00 - '.hourTranslate($i+1).':00</button>
+                        <button type="button" onclick="exposePaypalButton('.hourTranslate($i).','.$duration.')" class="btn btn-primary mt-1">'.hourTranslate($i).':00 - '.hourTranslate($i+1).':00</button>
                     ';
                 }   
             }
@@ -76,13 +75,18 @@ if($_POST["action"] == "check_booked_dates")
                 if($available_hours[$i] == "0"){
                     if(hourTranslate($i)!="22"){
                         $html .= '
-                            <button type="button" startTime='.hourTranslate($i).' duration='.$duration.' class="btn btn-primary mt-1">'.hourTranslate($i).':00 - '.hourTranslate($i+2).':00</button>
+                            <button type="button" onclick="exposePaypalButton('.hourTranslate($i).','.$duration.')" class="btn btn-primary mt-1">'.hourTranslate($i).':00 - '.hourTranslate($i+2).':00</button>
                         ';
                     }
                 }
             }
         }
         echo $html;
+}
+
+if($_POST["action"] == "insert_new_order")
+{
+
 }
 
 function hourTranslate($hour){

@@ -50,7 +50,7 @@
                 <img src="<?php echo $image; ?>" class="img-fluid" alt="Responsive image">
             </div>
             <div class="col-sm">
-                <h3><?php echo $name; ?></h3>
+                <h3>Space: <?php echo $name; ?></h3>
                 <h6><?php echo $street . ", " . $city; ?></h6>
                 <h6><?php echo $type; ?></h6>
                 <h6>Players: <?php echo $num_of_players; ?></h6>
@@ -62,7 +62,7 @@
                     <option value="1">1 Hour</option>
                     <option value="2">2 Hours</option>
                 </select>
-                <h3 class="pt-4">Hour</h3>
+                <h3 class="mt-2">Choose Hours</h3>
                 <div class="card h-auto" id="card_hours_list">
                     <div class="card-body" id="hours_list">
                         <div class="spinner-border text-success" id="loading_spin" role="status">
@@ -70,10 +70,14 @@
                         </div>
                         <div id="hours_btns">
                         </div>
+                        <div id="startTime_input" style="display:none">aaa</div>
+                        <div id="duration_input" style="display:none">aaa</div>
                     </div>
                 </div>
-                <h3 class="pt-4 pb-3">Payment</h3>
-                <img src="include/paypal.jpg" class="img-fluid" alt="Paypal">
+                <h3 class="pt-4">Payment</h3>
+                <h6>* Choose all fields first</h6>
+                <div id="paypal-button"></div>
+                
             </div>
         </div>
     </div>
@@ -92,5 +96,70 @@
         CheckIfLoggedIn();
     </script>
     <script src="js/space_order.js"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+        paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+      sandbox: 'AbeFjnilEsMjJWUBQKKLZYno-HGrlbpYNTgfQ0_tf2FpbrEg7ahZZr6geT2ZtOqsayDWUYyHSV17D-G2'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+      size: 'large',
+      color: 'gold',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: '20',
+            currency: 'ILS',
+            details: {
+                subtotal: '16.60',
+                tax: '0.17'
+            }
+          },
+          description: 'Payment for booking a space'
+        }]
+      });
+    },
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+      return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+            var spaceID = url.searchParams.get("spaceID");
+            var username = url.searchParams.get("username");
+
+            $.ajax({
+                type: "POST",
+                url: "/urbanspace/php_classes/space_order.php",		
+                data: {
+                    action: 'insert_new_order',
+                    spaceID: spaceID,
+                    book_date: book_date.value,
+                    duration: duration.value,
+                    username: username
+                },
+                success: function(data){
+                    loading_spin.style.display = "none";
+                    document.getElementById('hours_btns').innerHTML = data;
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error in ajax request <js/space_order.js>");
+                    console.log(errorThrown);
+                }
+            });
+      });
+    }
+  }, '#paypal-button');
+    </script>
 </body>
 </html>

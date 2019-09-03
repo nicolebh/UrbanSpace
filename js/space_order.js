@@ -7,6 +7,7 @@ $(document).ready(()=> {
     }
     const duration = document.getElementById("duration");
     duration.disabled=true;
+    document.getElementById('paypal-button').style.display="none";
 })
 
 function getAvailableHours() {
@@ -14,7 +15,7 @@ function getAvailableHours() {
     loading_spin.style.visibility = "visible";
     var url_string = document.URL;
     var url = new URL(url_string);
-    
+    var book_date = document.getElementById('book_date').value;
     var spaceID = url.searchParams.get("spaceID");
     var duration = document.getElementById("duration");
     
@@ -24,7 +25,7 @@ function getAvailableHours() {
         data: {
             action: 'check_booked_dates',
             spaceID: spaceID,
-            book_date: book_date.value,
+            book_date: book_date,
             duration: duration.value
         },
         success: function(data){
@@ -36,4 +37,12 @@ function getAvailableHours() {
             console.log(errorThrown);
          }
     });
+}
+
+function exposePaypalButton(start_time, duration)
+{
+    document.getElementById('paypal-button').style.display="block";
+    console.log(start_time, duration);
+    document.getElementById('startTime_input').innerHTML = start_time;
+    document.getElementById('duration_input').innerHTML = duration;
 }
