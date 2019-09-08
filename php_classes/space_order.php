@@ -86,7 +86,27 @@ if($_POST["action"] == "check_booked_dates")
 
 if($_POST["action"] == "insert_new_order")
 {
+    $space_id = mysqli_real_escape_string($db, $_POST["space_id"]);
+    $username = mysqli_real_escape_string($db, $_POST["username"]);
+    $date = mysqli_real_escape_string($db, $_POST["date"]);
+    $start_time = mysqli_real_escape_string($db, $_POST["start_time"]);
+    $duration = mysqli_real_escape_string($db, $_POST["duration"]);
+    $finish_time = mysqli_real_escape_string($db, $_POST["finish_time"]);
+    $created_time = mysqli_real_escape_string($db, $_POST["created_time"]);
 
+    $query = "
+    INSERT INTO orders
+    (username, space_id, date, start_time, duration, finish_time, created_time)
+    VALUES ('$username', $space_id, '$date', '$start_time', $duration, '$finish_time', '$created_time');
+    ";
+
+    if(!mysqli_query($db, $query)){
+        $html = '<div class="alert alert-danger" role="alert">Error while trying to run the following on the DB</div>';
+        echo $html;
+    }
+    else {
+        echo mysqli_insert_id($db);
+    }
 }
 
 function hourTranslate($hour){

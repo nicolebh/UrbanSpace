@@ -79,7 +79,7 @@
                 <h3 class="pt-4">Payment</h3>
                 <h6>* Choose all fields first</h6>
                 <div id="paypal-button"></div>
-                
+                <div class="loading" id="page_loading" style="display:none">Loading&#8230;</div>
             </div>
         </div>
     </div>
@@ -136,30 +136,37 @@
     onAuthorize: function(data, actions) {
       return actions.payment.execute().then(function() {
         // Show a confirmation message to the buyer
-            
-            var spaceID = document.querySelector('#spaceID').value;
+            document.querySelector('#page_loading').style.display = "block";
+            var space_id = document.querySelector('#spaceID').value;
             var username = document.querySelector('#username').value;
-            var dateOrder = document.querySelector('#username').value;
-            // console.log(spaceID, username, book_date, duration);
-            // $.ajax({
-            //     type: "POST",
-            //     url: "/urbanspace/php_classes/space_order.php",		
-            //     data: {
-            //         action: 'insert_new_order',
-            //         spaceID: spaceID,
-            //         book_date: book_date.value,
-            //         duration: duration.value,
-            //         username: username
-            //     },
-            //     success: function(data){
-            //         loading_spin.style.display = "none";
-            //         document.getElementById('hours_btns').innerHTML = data;
-            //     },
-            //     error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //         console.log("error in ajax request <js/space_order.js>");
-            //         console.log(errorThrown);
-            //     }
-            // });
+            var date = document.querySelector('#book_date').value;
+            var start_time = document.querySelector('#startTime_input').innerHTML;
+            var duration = document.querySelector('#duration_input').innerHTML;
+            var finish_time = Number(start_time) + Number(duration);
+            var d = new Date();
+            var created_time = d.getHours() + ":" + d.getMinutes() + ":" + d.getUTCSeconds() + " " + d.getFullYear() + "-" + (Number(d.getMonth())+1) + "-" + d.getUTCDate();
+            
+            $.ajax({
+                type: "POST",
+                url: "/urbanspace/php_classes/space_order.php",		
+                data: {
+                    action: 'insert_new_order',
+                    space_id:space_id,
+                    username: username,
+                    date: date,
+                    start_time: start_time,
+                    duration: duration,
+                    finish_time: finish_time,
+                    created_time: created_time
+                },
+                success: function(data){
+                    location.replace("/urbanspace/finish_order.php?order_id="+data);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error in ajax request <js/space_order.js>");
+                    console.log(errorThrown);
+                }
+            });
       });
     }
   }, '#paypal-button');
