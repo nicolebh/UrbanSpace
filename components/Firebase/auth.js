@@ -1,17 +1,17 @@
 //Listen for auth status changes
-auth.onAuthStateChanged(user => {
-    const loginBtn = document.querySelector('#login-btn');
-    const userMenu = document.querySelector('#user-menu');
-    if(user){
-        console.log("user logged in: ", user)
-        loginBtn.style.display = "none";
-        userMenu.style.display = "block";
-    } else {
-        console.log("user logged out");
-        loginBtn.style.display = "block";
-        userMenu.style.display = "none";
-    }
-})
+// auth.onAuthStateChanged(user => {
+//     const loginBtn = document.querySelector('#login-btn');
+//     const userMenu = document.querySelector('#user-menu');
+//     if(user){
+//         console.log("user logged in: ", user)
+//         loginBtn.style.display = "none";
+//         userMenu.style.display = "block";
+//     } else {
+//         console.log("user logged out");
+//         loginBtn.style.display = "block";
+//         userMenu.style.display = "none";
+//     }
+// })
 
 if(document.querySelector('#signup-form')){
     const signupForm = document.querySelector('#signup-form');

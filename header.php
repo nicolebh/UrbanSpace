@@ -12,7 +12,7 @@ else {
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-light" id="header_menu">
-  <a class="navbar-brand" href="#"><img src="http://nimrodba.mtacloud.co.il/include/logo.png" width="110px" height="70px"></a>
+  <a class="navbar-brand" href="#"><img src="/urbanspace/include/logo.png" width="110px" height="70px"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
