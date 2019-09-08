@@ -3,7 +3,7 @@ session_start();
 
 if(isset($_SESSION["fullname"])){
   $fullname = $_SESSION["fullname"];
-  $mgmt_btn = '<button type="button" id="user-menu" class="btn btn-info btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, '. $fullname.'</button>';
+  $mgmt_btn = '<button type="button" id="user-menu" class="btn btn-info btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, '. substr($fullname, 0, strrpos($fullname, ' ')).'&nbsp</button>';
   $login_btn = "";
 }
 else {

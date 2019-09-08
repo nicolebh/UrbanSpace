@@ -70,8 +70,10 @@
                         </div>
                         <div id="hours_btns">
                         </div>
-                        <div id="startTime_input" style="display:none">aaa</div>
-                        <div id="duration_input" style="display:none">aaa</div>
+                        <div id="startTime_input" style="display:none"></div>
+                        <div id="duration_input" style="display:none"></div>
+                        <input type="hidden" id="username" value="<?php echo $_GET['username']; ?>" />
+                        <input type="hidden" id="spaceID" value="<?php echo $_GET['spaceID']; ?>" />
                     </div>
                 </div>
                 <h3 class="pt-4">Payment</h3>
@@ -104,6 +106,9 @@
     client: {
       sandbox: 'AbeFjnilEsMjJWUBQKKLZYno-HGrlbpYNTgfQ0_tf2FpbrEg7ahZZr6geT2ZtOqsayDWUYyHSV17D-G2'
     },
+    presentation: {
+    logo_image: "/urbanspace/include/logo.png"
+    },
     // Customize button (optional)
     locale: 'en_US',
     style: {
@@ -121,11 +126,7 @@
         transactions: [{
           amount: {
             total: '20',
-            currency: 'ILS',
-            details: {
-                subtotal: '16.60',
-                tax: '0.17'
-            }
+            currency: 'ILS'
           },
           description: 'Payment for booking a space'
         }]
@@ -135,28 +136,30 @@
     onAuthorize: function(data, actions) {
       return actions.payment.execute().then(function() {
         // Show a confirmation message to the buyer
-            var spaceID = url.searchParams.get("spaceID");
-            var username = url.searchParams.get("username");
-
-            $.ajax({
-                type: "POST",
-                url: "/urbanspace/php_classes/space_order.php",		
-                data: {
-                    action: 'insert_new_order',
-                    spaceID: spaceID,
-                    book_date: book_date.value,
-                    duration: duration.value,
-                    username: username
-                },
-                success: function(data){
-                    loading_spin.style.display = "none";
-                    document.getElementById('hours_btns').innerHTML = data;
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("error in ajax request <js/space_order.js>");
-                    console.log(errorThrown);
-                }
-            });
+            
+            var spaceID = document.querySelector('#spaceID').value;
+            var username = document.querySelector('#username').value;
+            var dateOrder = document.querySelector('#username').value;
+            // console.log(spaceID, username, book_date, duration);
+            // $.ajax({
+            //     type: "POST",
+            //     url: "/urbanspace/php_classes/space_order.php",		
+            //     data: {
+            //         action: 'insert_new_order',
+            //         spaceID: spaceID,
+            //         book_date: book_date.value,
+            //         duration: duration.value,
+            //         username: username
+            //     },
+            //     success: function(data){
+            //         loading_spin.style.display = "none";
+            //         document.getElementById('hours_btns').innerHTML = data;
+            //     },
+            //     error: function(XMLHttpRequest, textStatus, errorThrown) {
+            //         console.log("error in ajax request <js/space_order.js>");
+            //         console.log(errorThrown);
+            //     }
+            // });
       });
     }
   }, '#paypal-button');

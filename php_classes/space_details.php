@@ -1,4 +1,5 @@
 <?php
+session_start();
 class spaceDetails {
     private $host  = 'localhost';
     private $user  = 'nimrodba_admin';
@@ -26,23 +27,7 @@ class spaceDetails {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $address = $row['address'] . ', ' . $row['city'];
-			// $generateHTML .= '
-            //         <div class="col-sm" id="space_details_card">
-            //             <div class="row">
-            //               <div class="card"> 
-            //                     <img src="'.$row['image'].'" class="card-img-top" alt="...">
-			// 				<div class="card-body" style="text-align:center;">
-			// 					<h5 class="card-title">'.$row['name'].'</h5>
-			// 					<h6 class="card-subtitle mb-2 text-muted">'.$row['address'].', '.$row['city'].'</h6>
-			// 					<h6 class="card-subtitle mb-2 text-muted"></strong></h6>
-			// 					<h6 class="card-subtitle mb-2 text-muted"><strong>Num of players: '.$row['num_of_players'].'</strong></h6>
-			// 					<iframe frameborder="0" src="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' . str_replace(",", "", str_replace(" ", "+", $address)) . '&z=14&output=embed"></iframe><br>
-			// 					<a href="order.php" class="btn btn-success btn-lg btn-block">Order</a>
-			// 				</div>
-            //             </div>
-            //         </div>
-            //     </div>
-            //      ';
+
             $generateHTML .= '
                  <div class="row text-center">
                     <div class="col">
@@ -60,7 +45,7 @@ class spaceDetails {
                         <h5><strong>Num of players:</strong> '.$row['num_of_players'].'</h5>
                         <h5><strong>Features:</strong> '.$row['features'].'</h5>
                         <iframe frameborder="0" src="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' . str_replace(",", "", str_replace(" ", "+", $address)) . '&z=14&output=embed"></iframe>
-                        <a href="order.php" class="btn btn-success btn-block">Order</a>
+                        <a href="order.php?username='.$_SESSION["username"].'&spaceID='.$row["id"].'" class="btn btn-success btn-block">Order</a>
                     </div>
                 </div>
                 ';
