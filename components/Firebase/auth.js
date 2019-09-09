@@ -27,7 +27,7 @@ if(document.querySelector('#signup-form')){
         const phone = signupForm['phone'].value;
         const city = signupForm['city'].value;
         const street = signupForm['street'].value;
-        const terms = signupForm['terms'].checked;
+        // const terms = signupForm['terms'].checked;
         
             $.ajax({
                 type: "POST",
@@ -41,7 +41,7 @@ if(document.querySelector('#signup-form')){
                     phone: phone,
                     city: city,
                     street:	street,
-                    terms: terms
+                    // terms: terms
                 },
                 success: function(data){
                     if(data) {

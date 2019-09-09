@@ -18,14 +18,17 @@ if ($_POST["action"] == "register") {
   $city = mysqli_real_escape_string($db, $_POST["city"]);
   $street = mysqli_real_escape_string($db, $_POST["street"]);
   $created_time = date("Y-m-d h:i:s");
-  $terms = $_POST["terms"];
+  // $terms = $_POST["terms"];
   
   // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
   if (empty($username)) { array_push($errors, "Username is required"); }
   if (empty($email)) { array_push($errors, "Email is required"); }
   if (empty($password)) { array_push($errors, "Password is required"); }
-  if ($terms=='false') { array_push($errors, "You must read and accept the terms"); }
+  if (empty($fullname)) { array_push($errors, "Full name is required"); }
+  if (empty($phone)) { array_push($errors, "Phone is required"); }
+  if (empty($city)) { array_push($errors, "City is required"); }
+  if (empty($street)) { array_push($errors, "Street is required"); }
   
   // first check the database to make sure 
   // a user does not already exist with the same username and/or email
