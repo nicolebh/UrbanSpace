@@ -97,7 +97,7 @@ function displayNewSpaces(){
             newInDB: 'true'
         },
         success: function(data) {
-            $('#search-results').html(data.html);
+            $('#search-results').html("<span><strong>Filter: </strong>New spaces</span>" + data.html);
 		},
         error: function(XMLHttpRequest, textStatus, errorThrown) {
              alert(errorThrown);
@@ -124,7 +124,7 @@ function filterResults(type, value){
                 condition: sql_condition
             },
             success: function(data){
-                $('#search-results').html(data.html);
+                $('#search-results').html("<span><strong>Filter: </strong>"+sql_condition+"</span>" + data.html);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("errorrr");

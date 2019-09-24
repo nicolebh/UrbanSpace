@@ -27,7 +27,7 @@ if(document.querySelector('#signup-form')){
         const phone = signupForm['phone'].value;
         const city = signupForm['city'].value;
         const street = signupForm['street'].value;
-        const terms = signupForm['terms'].checked;
+        // const terms = signupForm['terms'].checked;
         
             $.ajax({
                 type: "POST",
@@ -41,7 +41,7 @@ if(document.querySelector('#signup-form')){
                     phone: phone,
                     city: city,
                     street:	street,
-                    terms: terms
+                    // terms: terms
                 },
                 success: function(data){
                     if(data) {
@@ -90,7 +90,7 @@ if(document.querySelector('#login-form')){
     const loginForm = document.querySelector('#login-form');
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-
+        document.querySelector('#page_loading').style.display = "block";
         //get user info
         const email = loginForm['login-email'].value;
         const password = loginForm['login-password'].value;
@@ -104,6 +104,7 @@ if(document.querySelector('#login-form')){
             },
             success: function(data){
                 if(data) {
+                    document.querySelector('#page_loading').style.display = "none";
                     console.log(data);
                     document.querySelector('#error_list').innerHTML = data;
                 }

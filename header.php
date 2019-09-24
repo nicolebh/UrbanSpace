@@ -27,9 +27,17 @@ else {
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>
       </li>
-      <li class="nav-item">
-        <u><a class="nav-item nav-link" href="search.php">Book a space</a></u>
-      </li>
+      <?php 
+        if(isset($_SESSION["role"]) && $_SESSION["role"] == "user"){ ?>
+              <li class="nav-item">
+                <u><a class="nav-item nav-link" href="search.php">Book a space</a></u>
+              </li>
+        <?php 
+            } else if(!isset($_SESSION["role"])) {?>
+                <li class="nav-item">
+                <u><a class="nav-item nav-link" href="search.php">Book a space</a></u>
+              </li>
+            <?php } ?>
     </ul>
     <span class="navbar-text" style="display: inline;">
         <?php echo $login_btn; ?>
@@ -62,30 +70,30 @@ else {
         <form action="/urbanspace/php_classes/spaces_mgmt.php" id="addNewSpace-form" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="space_name">Name</label>
-            <input type="text" class="form-control" name="space_name" id="space_name" placeholder="Enter a title for the space">
+            <input type="text" class="form-control" name="space_name" id="space_name" placeholder="Enter a title for the space" required>
           </div>
           <div class="form-group">
             <label for="space_address">Address</label>
-            <input type="text" class="form-control" name="space_address" id="space_address" placeholder="Example: Negba St 7">
+            <input type="text" class="form-control" name="space_address" id="space_address" placeholder="Example: Negba St 7" required>
           </div>
           <div class="form-group">
             <label for="space_city">City</label>
-            <input type="text" class="form-control" name="space_city" id="space_city" placeholder="Example: Tel-Aviv">
+            <input type="text" class="form-control" name="space_city" id="space_city" placeholder="Example: Tel-Aviv" required>
           </div>
           <div class="form-group">
             <label for="space_sport_type">Type of sport</label>
-            <input type="text" class="form-control" name="space_sport_type" id="space_sport_type" placeholder="Example: Football">
+            <input type="text" class="form-control" name="space_sport_type" id="space_sport_type" placeholder="Example: Football" required>
           </div>
           <div class="form-group">
             <label for="space_num_players">Amount of players</label>
-            <input type="number" class="form-control" name="space_num_players" id="space_num_players" placeholder="Example: 5 players">
+            <input type="number" class="form-control" name="space_num_players" id="space_num_players" placeholder="Example: 5 players" required>
           </div>
           <div class="form-group" id="space_features_box">
             <!-- Generated from spaces_mgmt.php -->
           </div>
           <div class="form-group">
             <label for="space_image">Image</label>
-            <input type="file" class="form-control" id="space_image" name="space_image">
+            <input type="file" class="form-control" id="space_image" name="space_image" required>
           </div>
       </div>
       <div class="modal-footer">

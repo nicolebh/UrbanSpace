@@ -28,7 +28,7 @@
         <div class="container space">
             <div class="row" style="background-color: white;">
                     <div class="col-sm" id="pic-block">
-                            <!-- <img src="include/Main1-pics.jpg" class="img-fluid" alt="Responsive image"> -->
+                             <!--<img src="include/Main1-pics.jpg" class="img-fluid" alt="Responsive image"> -->
                     </div>
                     <div class="col-sm" id="about-block">
                         <h1>About</h1>

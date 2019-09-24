@@ -43,7 +43,8 @@ class Space {
                         $status = '<small class="float-right text-success font-weight-bold">Available to use</small>';
                         $order = '<a href="order.php?username='.$_SESSION['username'].'&spaceID='.$row['id'].'" class="card-link font-weight-bold">Book</a>';
                         $details = '<a href="space-details.php?spaceID='.$row['id'].'" class="card-link">Details</a>';
-                        $report_an_issue = '<a href="report_an_issue.php?spaceID='.$row['id'].'" class="card-link">Report an issue</a>';
+                        if(isset($_SESSION["role"]) && $_SESSION["role"] == "user")
+                            $report_an_issue = '<a href="report_an_issue.php?spaceID='.$row['id'].'" class="card-link">Report an issue</a>';
                     }
                     else {
                         $status = '<small class="text-danger font-weight-bold">Closed for the moment</small>';
@@ -120,6 +121,19 @@ class Space {
                     $generateHTML .= '<div class="row">';
                 }
                     $address = $row['address'] . ', ' . $row['city'];
+                    $status = $row['status'];
+                    if($status == "open"){
+                        $status = '<small class="float-right text-success font-weight-bold">Available to use</small>';
+                        $order = '<a href="order.php?username='.$_SESSION['username'].'&spaceID='.$row['id'].'" class="card-link font-weight-bold">Book</a>';
+                        $details = '<a href="space-details.php?spaceID='.$row['id'].'" class="card-link">Details</a>';
+                        $report_an_issue = '<a href="report_an_issue.php?spaceID='.$row['id'].'" class="card-link">Report an issue</a>';
+                    }
+                    else {
+                        $status = '<small class="text-danger font-weight-bold">Closed for the moment</small>';
+                        $order = '';
+                        $details = '';
+                        $report_an_issue = '';
+                    }
                     $generateHTML .= '
                     <div class="col-sm">
                         <div class="card">
@@ -129,7 +143,10 @@ class Space {
                             <h6 class="card-subtitle mb-2 text-muted">'.$row['address'].', '.$row['city'].'</h6>
                             <h6 class="card-subtitle mb-2 text-muted"><strong>Type:</strong> '.$row['sport_type'].'</strong></h6>
                             <h6 class="card-subtitle mb-2 text-muted"><strong>Num of players: '.$row['num_of_players'].'</strong></h6>
-                            <a href="#" class="card-link">Order</a>
+                            '.$order.'<br>
+                            '.$details.'
+                            '.$status.'<br>
+                            '.$report_an_issue.'
                             </div>
                         </div>
                     </div>

@@ -89,3 +89,4 @@
 [16-Jun-2019 21:37:00 UTC] PHP Warning:  include(header.php): failed to open stream: No such file or directory in /home/nimrodba/public_html/php_classes/insert_new_order.php on line 68
 [16-Jun-2019 21:37:00 UTC] PHP Warning:  include(header.php): failed to open stream: No such file or directory in /home/nimrodba/public_html/php_classes/insert_new_order.php on line 68
 [16-Jun-2019 21:37:00 UTC] PHP Warning:  include(): Failed opening 'header.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/nimrodba/public_html/php_classes/insert_new_order.php on line 68
+[09-Sep-2019 20:45:26 UTC] PHP Warning:  mkdir(): File exists in /home/nimrodba/public_html/urbanspace/php_classes/spaces_mgmt.php on line 34

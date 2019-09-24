@@ -125,7 +125,7 @@ function handle_shut_space_btn(spaceId){
         success: function(data){
             document.getElementById('shut_space_btn_'+spaceId).style.display="none";
             document.getElementById('open_space_btn_'+spaceId).style.display="inline";
-            document.getElementById('issue_status_lbl').innerHTML="Space Current Shut";
+            document.getElementById('issue_status_lbl').innerHTML="Space Currently Shut";
             document.getElementById('status_lbl').innerHTML=" Close";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -147,7 +147,7 @@ function handle_open_space_btn(spaceId){
             console.log(data);
             document.getElementById('shut_space_btn_'+spaceId).style.display="inline";
             document.getElementById('open_space_btn_'+spaceId).style.display="none";
-            document.getElementById('issue_status_lbl').innerHTML="Space Current Open";
+            document.getElementById('issue_status_lbl').innerHTML="Space Currently Open";
             document.getElementById('status_lbl').innerHTML=" Open";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

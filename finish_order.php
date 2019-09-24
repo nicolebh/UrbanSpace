@@ -74,6 +74,7 @@ else{
                 <h4>From: <?php echo $start_date; ?><h4>
                 <h4>For: <?php echo $duration; ?> hour<h4>
                 <hr>
+                <h4 class="py-3">Share your space</h4>
                 <div class="fb-share-button" data-href="http://nimrodba.mtacloud.co.il/urbanspace/finish_order.php?order_id=<?php echo $order_id;?>" data-size="large" data-layout="button"></div><br>
                 <a href="whatsapp://send" data-text="We are playing today!!" data-href=""><button type="button" class="btn btn-whatsapp btn-sm"><i class="fa fa-facebook fa-2"></i>What'sApp</button></a>
             </div>

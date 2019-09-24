@@ -65,20 +65,15 @@ if (isset($_POST["space_name"])) {
             $html .= '</ul></div>';
             echo $html;
             } else {
-                header("Location: /urbanspace/index.php");
+                header("Location: /urbanspace/index.php?test=1");
             }
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
     }
-    $html = '<div class="alert alert-danger" role="alert"><ul>';
-            foreach ($errors as $value)
-            $html .= '
-            <li>'.$value.'</li>
-            ';
-            $html .= '</ul></div>';
+    $html = '<div class="alert alert-danger" role="alert">Sorry, all fields mandatory</div>';
             echo $html;
-    header("Location: /urbanspace/index.php");
+    // header("Location: /urbanspace/index.php?test=2");
 }
 
 // Get a list of features
@@ -220,15 +215,15 @@ if ($_POST["action"] == "resolve_issue") {
         echo "Error while trying to remove space";
     }
     else {
-        $query = "SELECT users.email FROM reports INNER JOIN users on users.username = reports.issue_user WHERE id=$id";
+        
+        $query = "SELECT users.email,users.fullname FROM reports INNER JOIN users on users.username = reports.issue_user WHERE id=$id";
         $result = mysqli_query($db, $query);
         $row = $result->fetch_assoc();
 
         $from = "nicole.marcus1@gmail.com";
-        $to = "yaniv.bhemo@gmail.com";
-        // $to = $row['email'];
+        $to = $row['email'];
         $subject = "Urbanspace - Your issue has been resolved :)";
-        $message = "Greetings from Urabnspace";
+        $message = 'We are happy to update you that your issue has resolved !';
         $headers = "From:" . $from;
         mail($to,$subject,$message, $headers);
         echo "The email message was sent.";

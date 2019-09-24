@@ -1,7 +1,7 @@
 $(document).ready(function() {
     firebase.auth().getRedirectResult().then(function(result) {
-        document.querySelector('#page_loading').style.display = "block";
         if (result.credential) {
+            document.querySelector('#page_loading').style.display = "block";
             document.querySelector('#sign_in_btn').innerHTML= 'Loading';
             document.querySelector('#login-email').disabled = true;
             document.querySelector('#login-password').disabled = true;

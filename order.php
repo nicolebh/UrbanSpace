@@ -55,14 +55,14 @@
                 <h6><?php echo $type; ?></h6>
                 <h6>Players: <?php echo $num_of_players; ?></h6>
                 <br>
-                <h3>Book from</h3>
+                <h3>* Book from</h3>
                 <input type="date" onchange="getAvailableHours()" id="book_date" class="form-control py-1 pl-2 w-100" min="<?php echo date("Y-m-d"); ?>">
-                <h3 class="mt-2">Duration</h3>
+                <h3 class="mt-2">* Duration</h3>
                 <select class="form-control" id="duration" onchange="getAvailableHours()">
                     <option value="1">1 Hour</option>
                     <option value="2">2 Hours</option>
                 </select>
-                <h3 class="mt-2">Choose Hours</h3>
+                <h3 class="mt-2">* Choose Hours</h3>
                 <div class="card h-auto" id="card_hours_list">
                     <div class="card-body" id="hours_list">
                         <div class="spinner-border text-success" id="loading_spin" role="status">
