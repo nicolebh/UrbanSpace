@@ -26,7 +26,10 @@ if ($_POST["action"] == "register") {
   if (empty($email)) { array_push($errors, "Email is required"); }
   if (empty($password)) { array_push($errors, "Password is required"); }
   if (empty($fullname)) { array_push($errors, "Full name is required"); }
+<<<<<<< HEAD
   if (strrpos($fullname, ' ')) { array_push($errors, "Full name is required"); }
+=======
+>>>>>>> e011addcd93f0b8b067c4686ba03282ccd83eff1
   if (empty($phone)) { array_push($errors, "Phone is required"); }
   if (empty($city)) { array_push($errors, "City is required"); }
   if (empty($street)) { array_push($errors, "Street is required"); }
