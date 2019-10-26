@@ -1,7 +1,9 @@
 $(document).ready(function() {
+    if(document.referrer == ""){
+        document.querySelector('#page_loading').style.display = "block";
+    }
     firebase.auth().getRedirectResult().then(function(result) {
         if (result.credential) {
-            document.querySelector('#page_loading').style.display = "block";
             document.querySelector('#sign_in_btn').innerHTML= 'Loading';
             document.querySelector('#login-email').disabled = true;
             document.querySelector('#login-password').disabled = true;
@@ -35,7 +37,10 @@ $(document).ready(function() {
                 },
                 success: function(data){
                         document.querySelector('#error_list').innerHTML = data;
-                        window.location.replace("../../index.php"); 
+                        if(document.referrer.substring(0,51) == "http://nimrodba.mtacloud.co.il/urbanspace/order.php")
+                            window.location.replace(document.referrer);
+                        else
+                            window.location.replace("../../index.php"); 
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error in ajax request");
@@ -58,6 +63,7 @@ if(document.querySelector('#google_signin_btn')){
     const signin_btn = document.querySelector('#google_signin_btn');
     signin_btn.addEventListener('click', (e) => {
         e.preventDefault();
+        document.querySelector('#page_loading').style.display = "block";
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithRedirect(provider);
     });

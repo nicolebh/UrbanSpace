@@ -40,3 +40,5 @@
 [15-Jun-2019 15:18:06 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/nimrodba/public_html/space_details.php on line 34
 [15-Jun-2019 15:20:11 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/nimrodba/public_html/space_details.php on line 33
 [15-Jun-2019 15:58:50 UTC] PHP Parse error:  syntax error, unexpected '''' (T_CONSTANT_ENCAPSED_STRING) in /home/nimrodba/public_html/space_details.php on line 42
+[13-Oct-2019 12:32:02 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/nimrodba/public_html/urbanspace/index.php:13) in /home/nimrodba/public_html/urbanspace/header.php on line 2
+[13-Oct-2019 12:32:02 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/nimrodba/public_html/urbanspace/index.php:13) in /home/nimrodba/public_html/urbanspace/header.php on line 2

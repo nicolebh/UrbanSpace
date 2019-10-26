@@ -75,8 +75,7 @@ else{
                 <h4>For: <?php echo $duration; ?> hour<h4>
                 <hr>
                 <h4 class="py-3">Share your space</h4>
-                <div class="fb-share-button" data-href="http://nimrodba.mtacloud.co.il/urbanspace/finish_order.php?order_id=<?php echo $order_id;?>" data-size="large" data-layout="button"></div><br>
-                <a href="whatsapp://send" data-text="We are playing today!!" data-href=""><button type="button" class="btn btn-whatsapp btn-sm"><i class="fa fa-facebook fa-2"></i>What'sApp</button></a>
+                <div class="sharethis-inline-share-buttons"></div>
             </div>
         </div>
     </div>
@@ -86,5 +85,7 @@ else{
           <a href="index.php"> UrbanSpaces.com</a>
         </div>
     </footer>
+    
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5d8a7ea09a608b001285bd63&product=inline-share-buttons" async="async"></script>
 </body>
 </html>
